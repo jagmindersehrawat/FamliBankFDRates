@@ -539,6 +539,20 @@ class PeriodParser:
             self.stats['single_day'] += 1
             return ConversionResult(days, days, 1.0, 'single_month', period_text)
         
+        # 24. "365 days/ One Year" or "365 days/One Year" - treat as exactly 365 days
+        match = re.search(r'^(\d+)\s*days?\s*/\s*one\s*year', cleaned_text, re.IGNORECASE)
+        if match:
+            days = int(match.group(1))
+            return ConversionResult(days, days, 1.0, 'days_slash_year', period_text)
+
+        # 25. "Above N years" with no upper bound - treat as N*365 to 10*365
+        match = re.search(r'above\s+(\d+)\s*years?$', cleaned_text, re.IGNORECASE)
+        if match:
+            years = int(match.group(1))
+            from_days = years * 365
+            to_days = 10 * 365
+            return ConversionResult(from_days, to_days, 0.8, 'above_years_open', period_text)
+
         # If no pattern matched, return failure
         self.stats['failed'] += 1
         logger.warning(f"Could not parse period: '{period_text}'")

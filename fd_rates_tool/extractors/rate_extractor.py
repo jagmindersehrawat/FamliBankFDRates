@@ -88,6 +88,24 @@ class RateExtractor:
                 result.error_message = f"ICICI JSON extraction error: {str(e)}"
                 return result
         
+        # Special handling for Axis bank - PDF file
+        if self._is_axis_bank(url) and url.lower().endswith('.pdf'):
+            logger.info("Axis bank PDF detected - using PDF parser")
+            try:
+                rates = self._parse_axis_bank_pdf(url)
+                if rates:
+                    result.rates = rates
+                    result.extraction_success = True
+                    logger.info(f"Successfully extracted {len(result.rates)} rate entries from Axis Bank PDF")
+                    return result
+                else:
+                    result.error_message = "No rates found in Axis Bank PDF"
+                    return result
+            except Exception as e:
+                logger.error(f"Error extracting Axis Bank rates from PDF: {str(e)}")
+                result.error_message = f"Axis Bank PDF extraction error: {str(e)}"
+                return result
+        
         # Try extraction with retry logic and exponential backoff
         for attempt in range(self.config.scraping.max_retries):
             try:
@@ -153,6 +171,26 @@ class RateExtractor:
         """Check if the URL is for Bank of Maharashtra."""
         return 'bankofmaharashtra.bank.in' in url.lower() or 'mahabank.co.in' in url.lower()
     
+    def _is_bank_of_baroda(self, url: str) -> bool:
+        """Check if the URL is for Bank of Baroda."""
+        return 'bankofbaroda.bank.in' in url.lower() or 'bankofbaroda.in' in url.lower()
+    
+    def _is_canara_bank(self, url: str) -> bool:
+        """Check if the URL is for Canara Bank."""
+        return 'canarabank.bank.in' in url.lower() or 'canarabank.com' in url.lower()
+    
+    def _is_axis_bank(self, url: str) -> bool:
+        """Check if the URL is for Axis Bank."""
+        return 'axis.bank.in' in url.lower() or 'axisbank.com' in url.lower()
+    
+    def _is_au_small_finance_bank(self, url: str) -> bool:
+        """Check if the URL is for AU Small Finance Bank."""
+        return 'au.bank.in' in url.lower() or 'aubank.in' in url.lower()
+    
+    def _is_union_bank(self, url: str) -> bool:
+        """Check if the URL is for Union Bank of India."""
+        return 'unionbankofindia.bank.in' in url.lower() or 'unionbankofindia.co.in' in url.lower()
+    
     def _is_shivalik_bank(self, url: str) -> bool:
         """Check if the URL is for Shivalik Bank."""
         return 'shivalik.bank.in' in url.lower() or 'shivalikbank.com' in url.lower()
@@ -163,6 +201,14 @@ class RateExtractor:
     def _is_shivalik_bank(self, url: str) -> bool:
         """Check if the URL is for Shivalik Bank."""
         return 'shivalik.bank.in' in url.lower() or 'shivalikbank.com' in url.lower()
+    
+    def _is_indusind_bank(self, url: str) -> bool:
+        """Check if the URL is for IndusInd Bank."""
+        return 'indusind.bank.in' in url.lower() or 'indusindbank.com' in url.lower()
+    
+    def _is_idfc_first_bank(self, url: str) -> bool:
+        """Check if the URL is for IDFC FIRST Bank."""
+        return 'idfcfirst' in url.lower() or 'idfcfirstbank' in url.lower()
     
     def _parse_sbi_table(self, table: Tag) -> List[RateEntry]:
         """
@@ -337,6 +383,120 @@ class RateExtractor:
                 logger.error(f"ICICI: Error fetching/parsing JSON: {str(e)}")
 
             return rates
+
+    def _parse_axis_bank_pdf(self, url: str) -> List[RateEntry]:
+        """
+        Special parser for Axis Bank - extracts rates from PDF file.
+        Axis Bank provides rates in a PDF with a table structure:
+        - Column 0: Maturity Period
+        - Column 1: General (Less than ₹ 3 Cr) - **We want this**
+        - Column 2: General (₹ 3 Cr to less than ₹ 5 Cr)
+        - Column 3: Senior Citizens (Less than ₹ 3 Cr) - **We want this**
+        - Column 4: Senior Citizens (₹ 3 Cr to less than ₹ 5 Cr)
+        
+        Args:
+            url: URL to the PDF file
+            
+        Returns:
+            List of RateEntry objects
+        """
+        rates = []
+        
+        try:
+            import io
+            import PyPDF2
+            
+            logger.info(f"Axis Bank: Downloading PDF from {url}")
+            
+            # Download PDF
+            response = self.session.get(url, timeout=30)
+            if response.status_code != 200:
+                logger.error(f"Axis Bank: Failed to download PDF: {response.status_code}")
+                return rates
+            
+            # Parse PDF
+            pdf_file = io.BytesIO(response.content)
+            pdf_reader = PyPDF2.PdfReader(pdf_file)
+            
+            logger.info(f"Axis Bank: PDF has {len(pdf_reader.pages)} pages")
+            
+            # Extract text from first page (rates are in first table)
+            first_page = pdf_reader.pages[0]
+            text = first_page.extract_text()
+            
+            # Parse the text to extract table data
+            lines = text.split('\n')
+            
+            # Find the table start (after "Maturity Period")
+            table_start = -1
+            for i, line in enumerate(lines):
+                if 'Maturity Period' in line and 'Interest Rates' in line:
+                    table_start = i + 1
+                    break
+            
+            if table_start == -1:
+                logger.warning("Axis Bank: Could not find table start in PDF")
+                return rates
+            
+            # Skip header rows (General, Senior Citizens, Less than ₹ 3 Cr, etc.)
+            # The actual data starts after these headers
+            data_start = table_start
+            for i in range(table_start, min(table_start + 5, len(lines))):
+                if 'General' in lines[i] or 'Senior Citizens' in lines[i]:
+                    data_start = i + 1
+            
+            # Parse data rows
+            for line in lines[data_start:]:
+                line = line.strip()
+                
+                # Stop at disclaimer or empty lines
+                if not line or 'Disclaimer' in line or '*' in line[:5]:
+                    break
+                
+                # Split by multiple spaces to get columns
+                parts = line.split()
+                
+                if len(parts) < 5:
+                    continue
+                
+                try:
+                    # First part(s) are the tenure (may have multiple words/tokens)
+                    # Last 4 parts are the rates (2 for general, 2 for senior)
+                    # Extract rates from the end
+                    rate_parts = parts[-4:]
+                    
+                    # Column 1: General (Less than ₹ 3 Cr)
+                    general_rate = float(rate_parts[0])
+                    
+                    # Column 3: Senior Citizens (Less than ₹ 3 Cr)
+                    senior_rate = float(rate_parts[2])
+                    
+                    # Tenure is everything except the last 4 rate values
+                    tenure = ' '.join(parts[:-4])
+                    
+                    if not tenure:
+                        continue
+                    
+                    rate_entry = RateEntry(
+                        tenure=tenure,
+                        general_rate=general_rate,
+                        senior_citizen_rate=senior_rate
+                    )
+                    rates.append(rate_entry)
+                    logger.debug(f"Axis Bank: Extracted {tenure}: {general_rate}% / {senior_rate}%")
+                    
+                except (ValueError, IndexError) as e:
+                    logger.debug(f"Axis Bank: Skipping line (not a data row): {line[:50]}")
+                    continue
+            
+            logger.info(f"Axis Bank: Successfully extracted {len(rates)} rates from PDF")
+            
+        except ImportError:
+            logger.error("Axis Bank: PyPDF2 library not available for PDF parsing")
+        except Exception as e:
+            logger.error(f"Axis Bank: Error parsing PDF: {str(e)}")
+        
+        return rates
 
     def _parse_central_bank_table(self, soup: BeautifulSoup) -> List[RateEntry]:
         """
@@ -902,9 +1062,66 @@ class RateExtractor:
     def _parse_bank_of_maharashtra_table(self, soup: BeautifulSoup) -> List[RateEntry]:
         """
         Special parser for Bank of Maharashtra.
-        Bank of Maharashtra has a complex table with "Regular Schemes" section.
-        The rates are concatenated with 'xx' separators for different deposit slabs.
-        We extract rates for deposits < 3 Cr and apply +0.5% for senior citizens.
+        The page has a staircase-structured table (Table index 1) for deposits < Rs. 3 Cr.
+        Each row starts with the tenure for that row as the first token of the first cell,
+        followed by the callable rate for < 3 Cr as the second token.
+        Structure: Row 2 = "7- 30 days", Row 3 = "31-45 days", ..., Row 13 = "Above 5 years"
+        Senior citizen rate = general rate + 0.5%
+        """
+        rates = []
+
+        try:
+            tables = soup.find_all('table')
+            # Table 1 is the "Less than Rs. 3 Cr / Rs. 3 Cr to Rs. 10 Cr" table
+            if len(tables) < 2:
+                logger.warning("Bank of Maharashtra: Could not find rates table")
+                return rates
+
+            tbl = tables[1]
+            rows = tbl.find_all('tr')
+            logger.info("Bank of Maharashtra: Found rates table (%d rows)" % len(rows))
+
+            # Rows 2 onwards each represent one tenure band.
+            # The first cell of each row starts with: "<tenure> <callable_rate> xx <non-callable_rate> xx ..."
+            # We want the tenure and the first (callable) rate for < 3 Cr.
+            tenure_pattern = re.compile(
+                r'^([\w\s\-/]+?(?:days?|year[s]?|one year))\s+([\d.]+)',
+                re.IGNORECASE
+            )
+
+            for row in rows[2:]:
+                cells = row.find_all(['td', 'th'])
+                if not cells:
+                    continue
+                cell_text = cells[0].get_text(separator=' ', strip=True)
+                m = tenure_pattern.match(cell_text)
+                if m:
+                    tenure = m.group(1).strip()
+                    general_rate = float(m.group(2))
+                    senior_rate = round(general_rate + 0.5, 2)
+                    rates.append(RateEntry(
+                        tenure=tenure,
+                        general_rate=general_rate,
+                        senior_citizen_rate=senior_rate
+                    ))
+                    logger.debug("Bank of Maharashtra: %s -> %.2f%% / %.2f%%" % (tenure, general_rate, senior_rate))
+
+            logger.info("Bank of Maharashtra: Successfully extracted %d rates" % len(rates))
+
+        except Exception as e:
+            logger.error("Bank of Maharashtra: Error parsing table: %s" % str(e))
+
+        return rates
+    
+    def _parse_bank_of_baroda_table(self, soup: BeautifulSoup) -> List[RateEntry]:
+        """
+        Special parser for Bank of Baroda tables.
+        Bank of Baroda has callable FD rates in Table 0 for deposits < Rs. 3 Crore.
+        Table structure:
+        - Column 0: Tenors
+        - Column 1: Residents / General Public
+        - Column 2: Resident Indian Sr. Citizen
+        - Column 3: Resident Super Senior Citizen (we'll use column 2 for senior rates)
         
         Args:
             soup: BeautifulSoup object of the page
@@ -915,66 +1132,593 @@ class RateExtractor:
         rates = []
         
         try:
-            # Find 'Regular Schemes' text
-            regular_tag = soup.find('strong', string=lambda t: t and 'Regular Schemes' in t)
-            if not regular_tag:
-                logger.warning("Bank of Maharashtra: Could not find 'Regular Schemes' section")
+            # Find all tables
+            tables = soup.find_all('table')
+            
+            # Table 0 contains the callable FD rates for deposits < Rs. 3 Crore
+            if len(tables) < 1:
+                logger.warning("Bank of Baroda: Could not find the FD rates table")
                 return rates
             
-            logger.info("Bank of Maharashtra: Found 'Regular Schemes' section")
+            fd_table = tables[0]  # First table (index 0) - Callable FD rates
+            logger.info("Bank of Baroda: Found FD rates table (Callable - deposits < Rs. 3 Crore)")
             
-            # Find the next table row with rate data
-            next_elem = regular_tag
-            for _ in range(20):
-                next_elem = next_elem.find_next()
-                if not next_elem:
-                    break
+            rows = fd_table.find_all('tr')
+            
+            # Skip first row (header)
+            # Row 0: "Tenors" | "Residents / General Public" | "Resident Indian Sr. Citizen" | "Resident Super Senior Citizen"
+            # Row 1+: Data rows
+            
+            for row_idx in range(1, len(rows)):
+                row = rows[row_idx]
+                cells = row.find_all(['td', 'th'])
                 
-                if next_elem.name == 'tr':
-                    cells = next_elem.find_all(['td', 'th'])
-                    if len(cells) >= 2:
-                        cell1_text = cells[0].get_text().strip()
-                        cell2_text = cells[1].get_text().strip()
-                        
-                        # Check if it contains rate data
-                        if ('day' in cell1_text.lower() or 'year' in cell1_text.lower()) and len(cell1_text) > 50:
-                            logger.info("Bank of Maharashtra: Found rate data row")
-                            
-                            # Extract duration-rate pairs
-                            # Pattern: "7- 30 days" followed by rates like "2.6xx2.6xx..."
-                            duration_pattern = r'(\d+\s*-?\s*\d*\s*(?:days?|years?)[^x\d]*?)(?=\d+\s*-?\s*\d*\s*(?:days?|years?)|$)'
-                            durations = re.findall(duration_pattern, cell1_text, re.IGNORECASE)
-                            
-                            # Split rates by 'xx' - first rate is for < 3 Cr
-                            rate_parts = cell2_text.split('xx')
-                            
-                            logger.info(f"Bank of Maharashtra: Found {len(durations)} durations and {len(rate_parts)} rate parts")
-                            
-                            # Match durations with rates
-                            for i, duration in enumerate(durations):
-                                if i < len(rate_parts):
-                                    rate_text = rate_parts[i].strip()
-                                    # Extract numeric rate
-                                    rate_match = re.search(r'(\d+\.?\d*)', rate_text)
-                                    if rate_match:
-                                        general_rate = float(rate_match.group(1))
-                                        # Senior rate is +0.5%
-                                        senior_rate = round(general_rate + 0.5, 2)
-                                        
-                                        rate_entry = RateEntry(
-                                            tenure=duration.strip(),
-                                            general_rate=general_rate,
-                                            senior_citizen_rate=senior_rate
-                                        )
-                                        rates.append(rate_entry)
-                                        logger.debug(f"Bank of Maharashtra: Extracted {duration.strip()}: {general_rate}% / {senior_rate}%")
-                            
-                            break
+                # Need at least 3 columns (Tenors, General, Senior)
+                if len(cells) < 3:
+                    continue
+                
+                try:
+                    # Column 0: Tenors
+                    tenure = cells[0].get_text().strip()
+                    if not tenure or len(tenure) < 2:
+                        continue
+                    
+                    # Skip if it's a header row
+                    if 'tenor' in tenure.lower():
+                        continue
+                    
+                    # Column 1: Residents / General Public
+                    general_rate_text = cells[1].get_text().strip()
+                    general_rate_text = re.sub(r'[^\d.]', '', general_rate_text)
+                    if not general_rate_text:
+                        continue
+                    general_rate = float(general_rate_text)
+                    
+                    # Column 2: Resident Indian Sr. Citizen
+                    senior_rate = None
+                    if len(cells) >= 3:
+                        senior_text = cells[2].get_text().strip()
+                        senior_text = re.sub(r'[^\d.]', '', senior_text)
+                        if senior_text:
+                            senior_rate = float(senior_text)
+                    
+                    rate_entry = RateEntry(
+                        tenure=tenure,
+                        general_rate=general_rate,
+                        senior_citizen_rate=senior_rate
+                    )
+                    rates.append(rate_entry)
+                    logger.debug(f"Bank of Baroda: Extracted {tenure}: {general_rate}% / {senior_rate}%")
+                    
+                except Exception as e:
+                    logger.warning(f"Bank of Baroda: Error parsing row {row_idx}: {str(e)}")
+                    continue
             
-            logger.info(f"Bank of Maharashtra: Successfully extracted {len(rates)} rates")
+            logger.info(f"Bank of Baroda: Successfully extracted {len(rates)} rates")
             
         except Exception as e:
-            logger.error(f"Bank of Maharashtra: Error parsing table: {str(e)}")
+            logger.error(f"Bank of Baroda: Error parsing table: {str(e)}")
+        
+        return rates
+    
+    def _parse_canara_bank_table(self, soup: BeautifulSoup) -> List[RateEntry]:
+        """
+        Special parser for Canara Bank tables.
+        Canara Bank has FD rates in Table 1 for deposits < Rs. 3 Crore.
+        Table structure:
+        - Row 4: Headers with "General Public" and "Senior Citizen"
+        - Row 5: Sub-headers with "Annualised Interest yield (% p.a.)"
+        - Row 6+: Data rows with tenure and rates
+        
+        We extract:
+        - Column 0: Tenure
+        - Column 2: General Public - Annualised Interest yield (index 1 in row 5)
+        - Column 4: Senior Citizen - Annualised Interest yield (index 3 in row 5)
+        
+        Args:
+            soup: BeautifulSoup object of the page
+            
+        Returns:
+            List of RateEntry objects
+        """
+        rates = []
+        
+        try:
+            # Find all tables
+            tables = soup.find_all('table')
+            
+            # Table 1 contains the FD rates for deposits < Rs. 3 Crore
+            if len(tables) < 2:
+                logger.warning("Canara Bank: Could not find the FD rates table")
+                return rates
+            
+            fd_table = tables[1]  # Second table (index 1)
+            logger.info("Canara Bank: Found FD rates table (deposits < Rs. 3 Crore)")
+            
+            rows = fd_table.find_all('tr')
+            
+            # Skip first 6 rows (headers and sub-headers)
+            # Row 0: Title
+            # Row 1: "A. Domestic"
+            # Row 2: "Less than Rs.3 Crore"
+            # Row 3: "Callable" / "Non Callable"
+            # Row 4: "General Public" / "Senior Citizen" headers
+            # Row 5: "Annualised Interest yield" sub-headers
+            # Row 6+: Data rows
+            
+            for row_idx in range(6, len(rows)):
+                row = rows[row_idx]
+                cells = row.find_all(['td', 'th'])
+                
+                # Need at least 5 columns (Tenure, Gen Rate, Gen Yield, Sen Rate, Sen Yield)
+                if len(cells) < 5:
+                    continue
+                
+                try:
+                    # Column 0: Tenure
+                    tenure = cells[0].get_text().strip()
+                    if not tenure or len(tenure) < 2:
+                        continue
+                    
+                    # Skip if it's a header or note row
+                    if any(word in tenure.lower() for word in ['note', 'rate of interest', 'term deposits', 'callable', 'non callable']):
+                        continue
+                    
+                    # Column 2: General Public - Annualised Interest yield
+                    general_rate_text = cells[2].get_text().strip()
+                    general_rate_text = re.sub(r'[^\d.]', '', general_rate_text)
+                    if not general_rate_text or general_rate_text == 'NA':
+                        continue
+                    general_rate = float(general_rate_text)
+                    
+                    # Column 4: Senior Citizen - Annualised Interest yield
+                    senior_rate = None
+                    if len(cells) >= 5:
+                        senior_text = cells[4].get_text().strip()
+                        senior_text = re.sub(r'[^\d.]', '', senior_text)
+                        if senior_text and senior_text != 'NA':
+                            senior_rate = float(senior_text)
+                    
+                    rate_entry = RateEntry(
+                        tenure=tenure,
+                        general_rate=general_rate,
+                        senior_citizen_rate=senior_rate
+                    )
+                    rates.append(rate_entry)
+                    logger.debug(f"Canara Bank: Extracted {tenure}: {general_rate}% / {senior_rate}%")
+                    
+                except Exception as e:
+                    logger.warning(f"Canara Bank: Error parsing row {row_idx}: {str(e)}")
+                    continue
+            
+            logger.info(f"Canara Bank: Successfully extracted {len(rates)} rates")
+            
+        except Exception as e:
+            logger.error(f"Canara Bank: Error parsing table: {str(e)}")
+        
+        return rates
+    
+    def _parse_au_small_finance_bank_table(self, soup: BeautifulSoup) -> List[RateEntry]:
+        """
+        Special parser for AU Small Finance Bank tables.
+        AU Small Finance Bank has separate tables for:
+        - Regular customers (Domestic & NRE/NRO Retail Fixed Deposit)
+        - Senior Citizens
+        
+        Both tables have the same structure:
+        - Column 0: Tenures
+        - Column 1: Interest Rates (per annum)
+        - Column 2: Annualized Yield
+        
+        We need to match tenures between both tables to create complete rate entries.
+        
+        Args:
+            soup: BeautifulSoup object of the page
+            
+        Returns:
+            List of RateEntry objects
+        """
+        rates = []
+        
+        try:
+            # Find all tables
+            tables = soup.find_all('table')
+            
+            if len(tables) < 2:
+                logger.warning("AU Small Finance Bank: Could not find enough tables")
+                return rates
+            
+            logger.info(f"AU Small Finance Bank: Found {len(tables)} tables")
+            
+            # Find the regular and senior citizen tables
+            regular_table = None
+            senior_table = None
+            
+            for idx, table in enumerate(tables):
+                # Look at the preceding text/headings to identify the table
+                prev_text = ""
+                prev_elem = table.find_previous(['h2', 'h3', 'p', 'div'])
+                if prev_elem:
+                    prev_text = prev_elem.get_text().upper()
+                
+                # Check table content as well
+                table_text = table.get_text().upper()
+                
+                # Look for regular/domestic table (for amounts < 3 Crore)
+                if ('DOMESTIC' in prev_text or 'NRE' in prev_text or 'NRO' in prev_text) and 'SENIOR' not in prev_text:
+                    if '3 CRORE' in prev_text or '3 CR' in prev_text:
+                        regular_table = (idx, table)
+                        logger.info(f"AU Small Finance Bank: Found regular customer table at index {idx}")
+                
+                # Look for senior citizen table (for amounts < 3 Crore)
+                if 'SENIOR CITIZEN' in prev_text:
+                    if '3 CRORE' in prev_text or '3 CR' in prev_text:
+                        senior_table = (idx, table)
+                        logger.info(f"AU Small Finance Bank: Found senior citizen table at index {idx}")
+            
+            if not regular_table:
+                logger.warning("AU Small Finance Bank: Regular customer table not found")
+                return rates
+            
+            # Extract general rates from regular table
+            general_rates = self._extract_au_bank_rates(regular_table[1], "Regular")
+            
+            # Extract senior rates from senior citizen table if available
+            senior_rates = {}
+            if senior_table:
+                senior_rates_list = self._extract_au_bank_rates(senior_table[1], "Senior Citizen")
+                # Create a dictionary for easy lookup by tenure
+                senior_rates = {rate.tenure: rate.general_rate for rate in senior_rates_list}
+            
+            # Combine general and senior rates
+            for gen_rate in general_rates:
+                senior_rate = senior_rates.get(gen_rate.tenure)
+                
+                rate_entry = RateEntry(
+                    tenure=gen_rate.tenure,
+                    general_rate=gen_rate.general_rate,
+                    senior_citizen_rate=senior_rate
+                )
+                rates.append(rate_entry)
+                logger.debug(f"AU Small Finance Bank: Extracted {gen_rate.tenure}: {gen_rate.general_rate}% / {senior_rate}%")
+            
+            logger.info(f"AU Small Finance Bank: Successfully extracted {len(rates)} rates")
+            
+        except Exception as e:
+            logger.error(f"AU Small Finance Bank: Error parsing tables: {str(e)}")
+        
+        return rates
+    
+    def _extract_au_bank_rates(self, table: Tag, table_type: str) -> List[RateEntry]:
+        """
+        Extract rates from a single AU Small Finance Bank table.
+        
+        Args:
+            table: HTML table element
+            table_type: Type of table ("Regular" or "Senior Citizen")
+            
+        Returns:
+            List of RateEntry objects
+        """
+        rates = []
+        
+        try:
+            rows = table.find_all('tr')
+            
+            # Skip header row (row 0)
+            # Data starts from row 1
+            for row_idx in range(1, len(rows)):
+                row = rows[row_idx]
+                cells = row.find_all(['td', 'th'])
+                
+                # Need at least 2 columns (Tenure, Rate)
+                if len(cells) < 2:
+                    continue
+                
+                try:
+                    # Column 0: Tenure
+                    tenure = cells[0].get_text().strip()
+                    if not tenure or len(tenure) < 2:
+                        continue
+                    
+                    # Skip if it's a header row
+                    if any(word in tenure.lower() for word in ['tenure', 'maturity', 'period', 'interest rate']):
+                        continue
+                    
+                    # Column 1: Interest Rate (per annum)
+                    rate_text = cells[1].get_text().strip()
+                    rate_text = re.sub(r'[^\d.]', '', rate_text)
+                    if not rate_text:
+                        continue
+                    rate_value = float(rate_text)
+                    
+                    rate_entry = RateEntry(
+                        tenure=tenure,
+                        general_rate=rate_value
+                    )
+                    rates.append(rate_entry)
+                    logger.debug(f"AU Small Finance Bank ({table_type}): Extracted {tenure}: {rate_value}%")
+                    
+                except Exception as e:
+                    logger.warning(f"AU Small Finance Bank ({table_type}): Error parsing row {row_idx}: {str(e)}")
+                    continue
+            
+        except Exception as e:
+            logger.error(f"AU Small Finance Bank ({table_type}): Error extracting rates: {str(e)}")
+        
+        return rates
+    
+    def _parse_union_bank_table(self, soup: BeautifulSoup) -> List[RateEntry]:
+        """
+        Special parser for Union Bank of India tables.
+        Union Bank has a single table with general rates for deposits < Rs. 3 Cr.
+        Senior citizen rate = General rate + 0.50%
+        
+        Table structure:
+        - Column 0: Period
+        - Column 1: Revised Interest Rate
+        
+        Args:
+            soup: BeautifulSoup object of the page
+            
+        Returns:
+            List of RateEntry objects
+        """
+        rates = []
+        
+        try:
+            # Find all tables
+            tables = soup.find_all('table')
+            
+            # Table 0 contains the FD rates for deposits < Rs. 3 Cr
+            if len(tables) < 1:
+                logger.warning("Union Bank: Could not find the FD rates table")
+                return rates
+            
+            fd_table = tables[0]  # First table
+            logger.info("Union Bank: Found FD rates table (deposits < Rs. 3 Cr)")
+            
+            rows = fd_table.find_all('tr')
+            
+            # Skip first 2 rows (headers)
+            # Row 0: "Period" | "Revised Interest Rate"
+            # Row 1: "< Rs. 3 Cr"
+            # Row 2+: Data rows
+            
+            for row_idx in range(2, len(rows)):
+                row = rows[row_idx]
+                cells = row.find_all(['td', 'th'])
+                
+                # Need at least 2 columns (Period, Rate)
+                if len(cells) < 2:
+                    continue
+                
+                try:
+                    # Column 0: Period
+                    tenure = cells[0].get_text().strip()
+                    if not tenure or len(tenure) < 2:
+                        continue
+                    
+                    # Skip if it's a header row
+                    if any(word in tenure.lower() for word in ['period', 'tenure', 'maturity', 'rate']):
+                        continue
+                    
+                    # Column 1: Revised Interest Rate
+                    general_rate_text = cells[1].get_text().strip()
+                    general_rate_text = re.sub(r'[^\d.]', '', general_rate_text)
+                    if not general_rate_text:
+                        continue
+                    general_rate = float(general_rate_text)
+                    
+                    # Calculate senior citizen rate: General rate + 0.50%
+                    senior_rate = round(general_rate + 0.50, 2)
+                    
+                    rate_entry = RateEntry(
+                        tenure=tenure,
+                        general_rate=general_rate,
+                        senior_citizen_rate=senior_rate
+                    )
+                    rates.append(rate_entry)
+                    logger.debug(f"Union Bank: Extracted {tenure}: {general_rate}% / {senior_rate}%")
+                    
+                except Exception as e:
+                    logger.warning(f"Union Bank: Error parsing row {row_idx}: {str(e)}")
+                    continue
+            
+            logger.info(f"Union Bank: Successfully extracted {len(rates)} rates (senior rate = general + 0.50%)")
+            
+        except Exception as e:
+            logger.error(f"Union Bank: Error parsing table: {str(e)}")
+        
+        return rates
+    
+    def _parse_indusind_bank_table(self, soup: BeautifulSoup) -> List[RateEntry]:
+        """
+        Special parser for IndusInd Bank tables.
+        IndusInd Bank has rates for deposits < 3 Cr with Annualized Yield columns.
+        
+        Table structure (Table 0):
+        - Row 0: Main headers (< 3 Cr DOMESTIC, < 3 Cr Senior Citizen)
+        - Row 1: Sub-headers (Tenure, Rate, Annualized Yield, Rate, Annualized Yield)
+        - Row 2+: Data rows
+        
+        We extract:
+        - Column 0: Tenure
+        - Column 2: Annualized Yield (General)
+        - Column 4: Annualized Yield (Senior Citizen)
+        
+        Args:
+            soup: BeautifulSoup object of the page
+            
+        Returns:
+            List of RateEntry objects
+        """
+        rates = []
+        
+        try:
+            # Find all tables
+            tables = soup.find_all('table')
+            
+            # Table 0 contains the FD rates for deposits < 3 Cr
+            if len(tables) < 1:
+                logger.warning("IndusInd Bank: Could not find the FD rates table")
+                return rates
+            
+            fd_table = tables[0]  # First table
+            logger.info("IndusInd Bank: Found FD rates table (deposits < 3 Cr)")
+            
+            rows = fd_table.find_all('tr')
+            
+            # Skip first 2 rows (headers)
+            # Row 0: Main headers
+            # Row 1: Sub-headers (Tenure, Rate, Annualized Yield, Rate, Annualized Yield)
+            # Row 2+: Data rows
+            
+            for row_idx in range(2, len(rows)):
+                row = rows[row_idx]
+                cells = row.find_all(['td', 'th'])
+                
+                # Need at least 5 columns (Tenure, Rate, Annualized Yield, Rate, Annualized Yield)
+                if len(cells) < 5:
+                    continue
+                
+                try:
+                    # Column 0: Tenure
+                    tenure = cells[0].get_text().strip()
+                    if not tenure or len(tenure) < 2:
+                        continue
+                    
+                    # Skip if it's a header row
+                    if any(word in tenure.lower() for word in ['tenure', 'period', 'maturity', 'rate']):
+                        continue
+                    
+                    # Column 2: Annualized Yield (General)
+                    general_rate_text = cells[2].get_text().strip()
+                    general_rate_text = re.sub(r'[^\d.]', '', general_rate_text)
+                    if not general_rate_text:
+                        continue
+                    general_rate = float(general_rate_text)
+                    
+                    # Column 4: Annualized Yield (Senior Citizen)
+                    senior_rate_text = cells[4].get_text().strip()
+                    senior_rate_text = re.sub(r'[^\d.]', '', senior_rate_text)
+                    if not senior_rate_text:
+                        continue
+                    senior_rate = float(senior_rate_text)
+                    
+                    rate_entry = RateEntry(
+                        tenure=tenure,
+                        general_rate=general_rate,
+                        senior_citizen_rate=senior_rate
+                    )
+                    rates.append(rate_entry)
+                    logger.debug(f"IndusInd Bank: Extracted {tenure}: {general_rate}% / {senior_rate}%")
+                    
+                except Exception as e:
+                    logger.warning(f"IndusInd Bank: Error parsing row {row_idx}: {str(e)}")
+                    continue
+            
+            logger.info(f"IndusInd Bank: Successfully extracted {len(rates)} rates from annualized yield columns")
+            
+        except Exception as e:
+            logger.error(f"IndusInd Bank: Error parsing table: {str(e)}")
+        
+        return rates
+    
+    def _parse_idfc_first_bank_table(self, soup: BeautifulSoup) -> List[RateEntry]:
+        """
+        Special parser for IDFC FIRST Bank tables.
+        IDFC FIRST Bank has rates for deposits < ₹3 Crore.
+        
+        Table structure (Table 0):
+        - Row 0: Main header (Interest Rates for Domestic / NRO / NRE Fixed Deposits...)
+        - Row 1: Note
+        - Row 2: Column header (Tenure, Rate of Interest)
+        - Row 3: Sub-headers (General, Senior Citizen)
+        - Row 4+: Data rows
+        
+        We extract:
+        - Column 0: Tenure
+        - Column 1: General Rate
+        - Column 2: Senior Citizen Rate
+        
+        Args:
+            soup: BeautifulSoup object of the page
+            
+        Returns:
+            List of RateEntry objects
+        """
+        rates = []
+        
+        try:
+            # Find all tables
+            tables = soup.find_all('table')
+            
+            # Table 0 contains the FD rates for deposits < ₹3 Crore
+            if len(tables) < 1:
+                logger.warning("IDFC FIRST Bank: Could not find the FD rates table")
+                return rates
+            
+            fd_table = tables[0]  # First table
+            logger.info("IDFC FIRST Bank: Found FD rates table (deposits < ₹3 Crore)")
+            
+            rows = fd_table.find_all('tr')
+            
+            # Skip first 4 rows (headers)
+            # Row 0: Main header
+            # Row 1: Note
+            # Row 2: Column header (Tenure, Rate of Interest)
+            # Row 3: Sub-headers (General, Senior Citizen)
+            # Row 4+: Data rows
+            
+            for row_idx in range(4, len(rows)):
+                row = rows[row_idx]
+                cells = row.find_all(['td', 'th'])
+                
+                # Need at least 3 columns (Tenure, General Rate, Senior Rate)
+                if len(cells) < 3:
+                    continue
+                
+                try:
+                    # Column 0: Tenure
+                    tenure = cells[0].get_text().strip()
+                    if not tenure or len(tenure) < 2:
+                        continue
+                    
+                    # Skip if it's a header row
+                    if any(word in tenure.lower() for word in ['tenure', 'period', 'maturity', 'rate', 'general', 'senior']):
+                        continue
+                    
+                    # Column 1: General Rate
+                    general_rate_text = cells[1].get_text().strip()
+                    general_rate_text = re.sub(r'[^\d.]', '', general_rate_text)
+                    if not general_rate_text:
+                        continue
+                    general_rate = float(general_rate_text)
+                    
+                    # Column 2: Senior Citizen Rate
+                    senior_rate_text = cells[2].get_text().strip()
+                    senior_rate_text = re.sub(r'[^\d.]', '', senior_rate_text)
+                    if not senior_rate_text:
+                        continue
+                    senior_rate = float(senior_rate_text)
+                    
+                    rate_entry = RateEntry(
+                        tenure=tenure,
+                        general_rate=general_rate,
+                        senior_citizen_rate=senior_rate
+                    )
+                    rates.append(rate_entry)
+                    logger.debug(f"IDFC FIRST Bank: Extracted {tenure}: {general_rate}% / {senior_rate}%")
+                    
+                except Exception as e:
+                    logger.warning(f"IDFC FIRST Bank: Error parsing row {row_idx}: {str(e)}")
+                    continue
+            
+            logger.info(f"IDFC FIRST Bank: Successfully extracted {len(rates)} rates")
+            
+        except Exception as e:
+            logger.error(f"IDFC FIRST Bank: Error parsing table: {str(e)}")
         
         return rates
     
@@ -1551,10 +2295,40 @@ class RateExtractor:
             logger.info("Using Bank of Maharashtra-specific table parser")
             return self._parse_bank_of_maharashtra_table(soup)
         
+        # Check if this is Bank of Baroda and use special parser
+        if hasattr(self, '_current_url') and self._is_bank_of_baroda(self._current_url):
+            logger.info("Using Bank of Baroda-specific table parser")
+            return self._parse_bank_of_baroda_table(soup)
+        
+        # Check if this is Canara Bank and use special parser
+        if hasattr(self, '_current_url') and self._is_canara_bank(self._current_url):
+            logger.info("Using Canara Bank-specific table parser")
+            return self._parse_canara_bank_table(soup)
+        
+        # Check if this is AU Small Finance Bank and use special parser
+        if hasattr(self, '_current_url') and self._is_au_small_finance_bank(self._current_url):
+            logger.info("Using AU Small Finance Bank-specific table parser")
+            return self._parse_au_small_finance_bank_table(soup)
+        
+        # Check if this is Union Bank and use special parser
+        if hasattr(self, '_current_url') and self._is_union_bank(self._current_url):
+            logger.info("Using Union Bank-specific table parser")
+            return self._parse_union_bank_table(soup)
+        
         # Check if this is Shivalik Bank and use special parser
         if hasattr(self, '_current_url') and self._is_shivalik_bank(self._current_url):
             logger.info("Using Shivalik Bank-specific table parser")
             return self._parse_shivalik_bank_table(soup)
+        
+        # Check if this is IndusInd Bank and use special parser
+        if hasattr(self, '_current_url') and self._is_indusind_bank(self._current_url):
+            logger.info("Using IndusInd Bank-specific table parser")
+            return self._parse_indusind_bank_table(soup)
+        
+        # Check if this is IDFC FIRST Bank and use special parser
+        if hasattr(self, '_current_url') and self._is_idfc_first_bank(self._current_url):
+            logger.info("Using IDFC FIRST Bank-specific table parser")
+            return self._parse_idfc_first_bank_table(soup)
         
         rate_tables = self._identify_rate_tables(soup)
         

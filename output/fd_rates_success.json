@@ -2,7 +2,7 @@
   {
     "bank_name": "Sbi Bank",
     "source_url": "https://sbi.bank.in/web/interest-rates/deposit-rates/retail-domestic-term-deposits",
-    "extraction_timestamp": "2026-03-02T23:59:38.591160",
+    "extraction_timestamp": "2026-05-05T16:14:22.235316",
     "extraction_success": true,
     "error_message": null,
     "rates": [
@@ -75,7 +75,7 @@
   {
     "bank_name": "Pnb Bank",
     "source_url": "https://pnb.bank.in/Interest-Rates-Deposit.html",
-    "extraction_timestamp": "2026-03-02T23:59:40.071332",
+    "extraction_timestamp": "2026-05-05T16:14:23.574440",
     "extraction_success": true,
     "error_message": null,
     "rates": [
@@ -234,9 +234,396 @@
     ]
   },
   {
+    "bank_name": "Bankofbaroda Bank",
+    "source_url": "https://bankofbaroda.bank.in/interest-rate-and-service-charges/deposits-interest-rates/fixed-deposits-callable-and-non-callable-upto-ten-crores",
+    "extraction_timestamp": "2026-05-05T16:14:25.538505",
+    "extraction_success": true,
+    "error_message": null,
+    "rates": [
+      {
+        "tenure": "7 days to 14 days",
+        "general_rate": 3.5,
+        "senior_citizen_rate": 4.0,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "15 days to 45 days",
+        "general_rate": 3.5,
+        "senior_citizen_rate": 4.0,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "46 days to 90 days",
+        "general_rate": 5.0,
+        "senior_citizen_rate": 5.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "91 days to 180 days",
+        "general_rate": 5.0,
+        "senior_citizen_rate": 5.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "181 days to 210 days",
+        "general_rate": 5.5,
+        "senior_citizen_rate": 6.0,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "211 days to 270 days",
+        "general_rate": 5.75,
+        "senior_citizen_rate": 6.25,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "271 days & above and less than 1 year",
+        "general_rate": 6.0,
+        "senior_citizen_rate": 6.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "1 year",
+        "general_rate": 6.1,
+        "senior_citizen_rate": 6.6,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "Above 1 year to 400 days",
+        "general_rate": 6.25,
+        "senior_citizen_rate": 6.75,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "Above 400 days and upto 2 Years (except 444 Days)",
+        "general_rate": 6.25,
+        "senior_citizen_rate": 6.75,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "bob Square Drive Deposit Scheme (444 Days)",
+        "general_rate": 6.45,
+        "senior_citizen_rate": 6.95,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "Above 2 Years and upto 3 Years",
+        "general_rate": 6.25,
+        "senior_citizen_rate": 6.75,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "Above 3 Years and upto 5 Years",
+        "general_rate": 6.3,
+        "senior_citizen_rate": 6.9,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "Above 5 Years and upto 10 Years",
+        "general_rate": 6.0,
+        "senior_citizen_rate": 7.0,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "Above 10 years (MACAD\n                                     only)",
+        "general_rate": 5.5,
+        "senior_citizen_rate": 6.0,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      }
+    ]
+  },
+  {
+    "bank_name": "Canarabank Bank",
+    "source_url": "https://www.canarabank.bank.in/pages/deposit-interest-rates",
+    "extraction_timestamp": "2026-05-05T16:14:26.861870",
+    "extraction_success": true,
+    "error_message": null,
+    "rates": [
+      {
+        "tenure": "7 Days to 45 Days*",
+        "general_rate": 3.03,
+        "senior_citizen_rate": 3.03,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "46 Days to 90 Days",
+        "general_rate": 4.06,
+        "senior_citizen_rate": 4.06,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "91 Days to 179 Days",
+        "general_rate": 4.32,
+        "senior_citizen_rate": 4.32,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "180 Days to 269 Days",
+        "general_rate": 5.35,
+        "senior_citizen_rate": 5.87,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "270 Days to less than 1 Year",
+        "general_rate": 5.61,
+        "senior_citizen_rate": 6.14,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "1 Year & above to 1 year 3 months Only (Except 444 days)",
+        "general_rate": 6.4,
+        "senior_citizen_rate": 6.92,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "Above 1 Year 3 months to less than 2 Years (Except 555 days)",
+        "general_rate": 6.4,
+        "senior_citizen_rate": 6.92,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "444 Days*",
+        "general_rate": 6.6,
+        "senior_citizen_rate": 7.13,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "555 Days*",
+        "general_rate": 6.66,
+        "senior_citizen_rate": 7.19,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "2 Years & above to less than 3 Years",
+        "general_rate": 6.4,
+        "senior_citizen_rate": 6.92,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "3 Years & above to less than 5 Years",
+        "general_rate": 6.4,
+        "senior_citizen_rate": 6.92,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "5 Years & above to 10 Years",
+        "general_rate": 6.4,
+        "senior_citizen_rate": 6.92,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      }
+    ]
+  },
+  {
+    "bank_name": "Unionbankofindia Bank",
+    "source_url": "https://www.unionbankofindia.bank.in/en/details/rate-of-interest",
+    "extraction_timestamp": "2026-05-05T16:14:28.115875",
+    "extraction_success": true,
+    "error_message": null,
+    "rates": [
+      {
+        "tenure": "7-14 Days",
+        "general_rate": 2.7,
+        "senior_citizen_rate": 3.2,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "15 -30 Days",
+        "general_rate": 2.8,
+        "senior_citizen_rate": 3.3,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "31-45 Days",
+        "general_rate": 3.0,
+        "senior_citizen_rate": 3.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "46 -90 Days",
+        "general_rate": 4.0,
+        "senior_citizen_rate": 4.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "91-120 Days",
+        "general_rate": 4.5,
+        "senior_citizen_rate": 5.0,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "121-180 Days",
+        "general_rate": 5.0,
+        "senior_citizen_rate": 5.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "181 -270 Days",
+        "general_rate": 5.6,
+        "senior_citizen_rate": 6.1,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "271-364 Days",
+        "general_rate": 5.9,
+        "senior_citizen_rate": 6.4,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "> 1 Yr. to 399 days",
+        "general_rate": 6.25,
+        "senior_citizen_rate": 6.75,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "400 Days",
+        "general_rate": 6.35,
+        "senior_citizen_rate": 6.85,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "401 to 443 days",
+        "general_rate": 6.25,
+        "senior_citizen_rate": 6.75,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "444 days",
+        "general_rate": 6.6,
+        "senior_citizen_rate": 7.1,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "445 Days to 2 Yrs",
+        "general_rate": 6.2,
+        "senior_citizen_rate": 6.7,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": ">2 Yrs to 996 days",
+        "general_rate": 6.2,
+        "senior_citizen_rate": 6.7,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "997 days",
+        "general_rate": 6.15,
+        "senior_citizen_rate": 6.65,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": ">998 days to 3 Yrs",
+        "general_rate": 6.2,
+        "senior_citizen_rate": 6.7,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "1 Yr.",
+        "general_rate": 6.25,
+        "senior_citizen_rate": 6.75,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "> 3 Yrs to 10 Yrs",
+        "general_rate": 6.0,
+        "senior_citizen_rate": 6.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      }
+    ]
+  },
+  {
     "bank_name": "Centralbank Bank",
     "source_url": "https://centralbank.bank.in/en/interest-rates-on-deposit",
-    "extraction_timestamp": "2026-03-02T23:59:52.402479",
+    "extraction_timestamp": "2026-05-05T16:14:33.875703",
     "extraction_success": true,
     "error_message": null,
     "rates": [
@@ -341,7 +728,7 @@
   {
     "bank_name": "Iob Bank",
     "source_url": "https://www.iob.bank.in/en/domestic-nro-nre-retail-term-deposit-rates",
-    "extraction_timestamp": "2026-03-02T23:59:53.892661",
+    "extraction_timestamp": "2026-05-05T16:14:35.305006",
     "extraction_success": true,
     "error_message": null,
     "rates": [
@@ -358,296 +745,16 @@
   {
     "bank_name": "Uco Bank",
     "source_url": "https://www.uco.bank.in/en/web/guest/interest-rates-on-deposit-schemes",
-    "extraction_timestamp": "2026-03-02T23:59:55.314423",
+    "extraction_timestamp": "2026-05-05T16:14:36.719899",
     "extraction_success": true,
     "error_message": null,
     "rates": [
       {
-        "tenure": "7-14 days (<= 1 Lakh)",
-        "general_rate": 2.9,
-        "senior_citizen_rate": 3.15,
-        "min_amount": 0,
-        "max_amount": 100000,
-        "special_conditions": null
-      },
-      {
-        "tenure": "7-14 days (> 1 Lakh)",
-        "general_rate": 2.9,
-        "senior_citizen_rate": 3.4,
-        "min_amount": 100001,
-        "max_amount": 29999999,
-        "special_conditions": null
-      },
-      {
-        "tenure": "15-29 days (<= 1 Lakh)",
-        "general_rate": 2.9,
-        "senior_citizen_rate": 3.15,
-        "min_amount": 0,
-        "max_amount": 100000,
-        "special_conditions": null
-      },
-      {
-        "tenure": "15-29 days (> 1 Lakh)",
-        "general_rate": 2.9,
-        "senior_citizen_rate": 3.4,
-        "min_amount": 100001,
-        "max_amount": 29999999,
-        "special_conditions": null
-      },
-      {
-        "tenure": "30-45 days (<= 1 Lakh)",
-        "general_rate": 3.0,
-        "senior_citizen_rate": 3.25,
-        "min_amount": 0,
-        "max_amount": 100000,
-        "special_conditions": null
-      },
-      {
-        "tenure": "30-45 days (> 1 Lakh)",
-        "general_rate": 3.0,
-        "senior_citizen_rate": 3.5,
-        "min_amount": 100001,
-        "max_amount": 29999999,
-        "special_conditions": null
-      },
-      {
-        "tenure": "46-60 days (<= 1 Lakh)",
-        "general_rate": 3.5,
-        "senior_citizen_rate": 3.75,
-        "min_amount": 0,
-        "max_amount": 100000,
-        "special_conditions": null
-      },
-      {
-        "tenure": "46-60 days (> 1 Lakh)",
-        "general_rate": 3.5,
-        "senior_citizen_rate": 4.0,
-        "min_amount": 100001,
-        "max_amount": 29999999,
-        "special_conditions": null
-      },
-      {
-        "tenure": "61-90 days (<= 1 Lakh)",
-        "general_rate": 3.5,
-        "senior_citizen_rate": 3.75,
-        "min_amount": 0,
-        "max_amount": 100000,
-        "special_conditions": null
-      },
-      {
-        "tenure": "61-90 days (> 1 Lakh)",
-        "general_rate": 3.5,
-        "senior_citizen_rate": 4.0,
-        "min_amount": 100001,
-        "max_amount": 29999999,
-        "special_conditions": null
-      },
-      {
-        "tenure": "91-120 days (<= 1 Lakh)",
-        "general_rate": 4.25,
-        "senior_citizen_rate": 4.5,
-        "min_amount": 0,
-        "max_amount": 100000,
-        "special_conditions": null
-      },
-      {
-        "tenure": "91-120 days (> 1 Lakh)",
-        "general_rate": 4.25,
-        "senior_citizen_rate": 4.75,
-        "min_amount": 100001,
-        "max_amount": 29999999,
-        "special_conditions": null
-      },
-      {
-        "tenure": "121-150 days (<= 1 Lakh)",
-        "general_rate": 4.25,
-        "senior_citizen_rate": 4.5,
-        "min_amount": 0,
-        "max_amount": 100000,
-        "special_conditions": null
-      },
-      {
-        "tenure": "121-150 days (> 1 Lakh)",
-        "general_rate": 4.25,
-        "senior_citizen_rate": 4.75,
-        "min_amount": 100001,
-        "max_amount": 29999999,
-        "special_conditions": null
-      },
-      {
-        "tenure": "151-180 days (<= 1 Lakh)",
-        "general_rate": 4.75,
-        "senior_citizen_rate": 5.0,
-        "min_amount": 0,
-        "max_amount": 100000,
-        "special_conditions": null
-      },
-      {
-        "tenure": "151-180 days (> 1 Lakh)",
-        "general_rate": 4.75,
-        "senior_citizen_rate": 5.25,
-        "min_amount": 100001,
-        "max_amount": 29999999,
-        "special_conditions": null
-      },
-      {
-        "tenure": "181-332 days (<= 1 Lakh)",
-        "general_rate": 5.0,
-        "senior_citizen_rate": 5.25,
-        "min_amount": 0,
-        "max_amount": 100000,
-        "special_conditions": null
-      },
-      {
-        "tenure": "181-332 days (> 1 Lakh)",
-        "general_rate": 5.0,
-        "senior_citizen_rate": 5.5,
-        "min_amount": 100001,
-        "max_amount": 29999999,
-        "special_conditions": null
-      },
-      {
-        "tenure": "333 days (<= 1 Lakh)",
-        "general_rate": 6.3,
-        "senior_citizen_rate": 6.55,
-        "min_amount": 0,
-        "max_amount": 100000,
-        "special_conditions": null
-      },
-      {
-        "tenure": "333 days (> 1 Lakh)",
-        "general_rate": 6.3,
-        "senior_citizen_rate": 6.8,
-        "min_amount": 100001,
-        "max_amount": 29999999,
-        "special_conditions": null
-      },
-      {
-        "tenure": "334 – 364 days (<= 1 Lakh)",
-        "general_rate": 5.0,
-        "senior_citizen_rate": 5.25,
-        "min_amount": 0,
-        "max_amount": 100000,
-        "special_conditions": null
-      },
-      {
-        "tenure": "334 – 364 days (> 1 Lakh)",
-        "general_rate": 5.0,
-        "senior_citizen_rate": 5.5,
-        "min_amount": 100001,
-        "max_amount": 29999999,
-        "special_conditions": null
-      },
-      {
-        "tenure": "1 year (<= 1 Lakh)",
-        "general_rate": 6.1,
-        "senior_citizen_rate": 6.35,
-        "min_amount": 0,
-        "max_amount": 100000,
-        "special_conditions": null
-      },
-      {
-        "tenure": "1 year (> 1 Lakh)",
-        "general_rate": 6.1,
-        "senior_citizen_rate": 6.6,
-        "min_amount": 100001,
-        "max_amount": 29999999,
-        "special_conditions": null
-      },
-      {
-        "tenure": "Above 1Yr – 443 days (<= 1 Lakh)",
-        "general_rate": 6.1,
-        "senior_citizen_rate": 6.35,
-        "min_amount": 0,
-        "max_amount": 100000,
-        "special_conditions": null
-      },
-      {
-        "tenure": "Above 1Yr – 443 days (> 1 Lakh)",
-        "general_rate": 6.1,
-        "senior_citizen_rate": 6.6,
-        "min_amount": 100001,
-        "max_amount": 29999999,
-        "special_conditions": null
-      },
-      {
-        "tenure": "444 Days (<= 1 Lakh)",
-        "general_rate": 6.45,
-        "senior_citizen_rate": 6.7,
-        "min_amount": 0,
-        "max_amount": 100000,
-        "special_conditions": null
-      },
-      {
-        "tenure": "444 Days (> 1 Lakh)",
-        "general_rate": 6.45,
-        "senior_citizen_rate": 6.95,
-        "min_amount": 100001,
-        "max_amount": 29999999,
-        "special_conditions": null
-      },
-      {
-        "tenure": "445 days upto 2 yrs (<= 1 Lakh)",
-        "general_rate": 6.1,
-        "senior_citizen_rate": 6.35,
-        "min_amount": 0,
-        "max_amount": 100000,
-        "special_conditions": null
-      },
-      {
-        "tenure": "445 days upto 2 yrs (> 1 Lakh)",
-        "general_rate": 6.1,
-        "senior_citizen_rate": 6.6,
-        "min_amount": 100001,
-        "max_amount": 29999999,
-        "special_conditions": null
-      },
-      {
-        "tenure": "Above 2yrs – 3 yrs (<= 1 Lakh)",
-        "general_rate": 6.0,
-        "senior_citizen_rate": 6.25,
-        "min_amount": 0,
-        "max_amount": 100000,
-        "special_conditions": null
-      },
-      {
-        "tenure": "Above 2yrs – 3 yrs (> 1 Lakh)",
-        "general_rate": 6.0,
-        "senior_citizen_rate": 6.5,
-        "min_amount": 100001,
-        "max_amount": 29999999,
-        "special_conditions": null
-      },
-      {
-        "tenure": "Above 3yrs - 5yrs (<= 1 Lakh)",
-        "general_rate": 6.0,
-        "senior_citizen_rate": 6.25,
-        "min_amount": 0,
-        "max_amount": 100000,
-        "special_conditions": null
-      },
-      {
-        "tenure": "Above 3yrs - 5yrs (> 1 Lakh)",
-        "general_rate": 6.0,
-        "senior_citizen_rate": 6.5,
-        "min_amount": 100001,
-        "max_amount": 29999999,
-        "special_conditions": null
-      },
-      {
-        "tenure": "Above 5 yrs (<= 1 Lakh)",
-        "general_rate": 6.0,
-        "senior_citizen_rate": 6.25,
-        "min_amount": 0,
-        "max_amount": 100000,
-        "special_conditions": null
-      },
-      {
-        "tenure": "Above 5 yrs (> 1 Lakh)",
-        "general_rate": 6.0,
-        "senior_citizen_rate": 6.5,
-        "min_amount": 100001,
-        "max_amount": 29999999,
+        "tenure": "1 year",
+        "general_rate": 2.6,
+        "senior_citizen_rate": null,
+        "min_amount": null,
+        "max_amount": null,
         "special_conditions": null
       }
     ]
@@ -655,12 +762,12 @@
   {
     "bank_name": "Bankofmaharashtra Bank",
     "source_url": "https://bankofmaharashtra.bank.in/domestic-term-deposits",
-    "extraction_timestamp": "2026-03-02T23:59:56.828560",
+    "extraction_timestamp": "2026-05-05T16:14:38.552399",
     "extraction_success": true,
     "error_message": null,
     "rates": [
       {
-        "tenure": "1 year to",
+        "tenure": "7- 30 days",
         "general_rate": 2.6,
         "senior_citizen_rate": 3.1,
         "min_amount": null,
@@ -668,17 +775,89 @@
         "special_conditions": null
       },
       {
-        "tenure": "2 years to",
-        "general_rate": 2.6,
-        "senior_citizen_rate": 3.1,
+        "tenure": "31-45 days",
+        "general_rate": 2.75,
+        "senior_citizen_rate": 3.25,
         "min_amount": null,
         "max_amount": null,
         "special_conditions": null
       },
       {
-        "tenure": "3 years to",
-        "general_rate": 2.6,
-        "senior_citizen_rate": 3.1,
+        "tenure": "46-90 days",
+        "general_rate": 3.75,
+        "senior_citizen_rate": 4.25,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "91-119 days",
+        "general_rate": 4.0,
+        "senior_citizen_rate": 4.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "120-180 days",
+        "general_rate": 4.75,
+        "senior_citizen_rate": 5.25,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "181 - 270 days",
+        "general_rate": 5.0,
+        "senior_citizen_rate": 5.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "271 - 364 days",
+        "general_rate": 5.25,
+        "senior_citizen_rate": 5.75,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "365 days/ One Year",
+        "general_rate": 6.2,
+        "senior_citizen_rate": 6.7,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "Above 1 year to 2 years",
+        "general_rate": 6.15,
+        "senior_citizen_rate": 6.65,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "Above 2 years to 3 years",
+        "general_rate": 5.25,
+        "senior_citizen_rate": 5.75,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "Above 3 years to 5 years",
+        "general_rate": 5.0,
+        "senior_citizen_rate": 5.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "Above 5 years",
+        "general_rate": 5.0,
+        "senior_citizen_rate": 5.5,
         "min_amount": null,
         "max_amount": null,
         "special_conditions": null
@@ -688,7 +867,7 @@
   {
     "bank_name": "Hdfc Bank",
     "source_url": "https://www.hdfc.bank.in/fixed-deposit/fd-interest-rate",
-    "extraction_timestamp": "2026-03-02T23:59:58.165740",
+    "extraction_timestamp": "2026-05-05T16:14:39.919831",
     "extraction_success": true,
     "error_message": null,
     "rates": [
@@ -814,8 +993,8 @@
       },
       {
         "tenure": "3 Years 1 day to < 4 Years 7 Months",
-        "general_rate": 6.4,
-        "senior_citizen_rate": 6.9,
+        "general_rate": 6.5,
+        "senior_citizen_rate": 7.0,
         "min_amount": null,
         "max_amount": null,
         "special_conditions": null
@@ -849,7 +1028,7 @@
   {
     "bank_name": "Icici Bank",
     "source_url": "https://www.icici.bank.in/personal-banking/deposits/fixed-deposit/fd-interest-rates",
-    "extraction_timestamp": "2026-03-02T23:59:59.407849",
+    "extraction_timestamp": "2026-05-05T16:14:41.169835",
     "extraction_success": true,
     "error_message": null,
     "rates": [
@@ -936,9 +1115,162 @@
     ]
   },
   {
+    "bank_name": "Axis Bank",
+    "source_url": "https://www.axis.bank.in/docs/default-source/default-document-library/interest-rates/domestic-fixed-deposits-05-may-26.pdf",
+    "extraction_timestamp": "2026-05-05T16:14:41.265639",
+    "extraction_success": true,
+    "error_message": null,
+    "rates": [
+      {
+        "tenure": "7 – 14 days",
+        "general_rate": 3.0,
+        "senior_citizen_rate": 3.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "15 – 29 days",
+        "general_rate": 3.0,
+        "senior_citizen_rate": 3.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "30 – 45 days",
+        "general_rate": 3.25,
+        "senior_citizen_rate": 3.75,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "46 – 60 days",
+        "general_rate": 4.0,
+        "senior_citizen_rate": 4.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "61 days - 87 days",
+        "general_rate": 4.75,
+        "senior_citizen_rate": 5.25,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "88 days – 3 months 24 days",
+        "general_rate": 5.0,
+        "senior_citizen_rate": 5.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "3 months 25 days < 4 months",
+        "general_rate": 5.0,
+        "senior_citizen_rate": 5.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "4 months < 6 months",
+        "general_rate": 5.0,
+        "senior_citizen_rate": 5.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "6 months < 9 months",
+        "general_rate": 5.5,
+        "senior_citizen_rate": 6.0,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "9 months < 1 year",
+        "general_rate": 5.75,
+        "senior_citizen_rate": 6.25,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "1 year 11 days < 13 months",
+        "general_rate": 6.25,
+        "senior_citizen_rate": 6.75,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "1 year – 1 year 10 days",
+        "general_rate": 6.25,
+        "senior_citizen_rate": 6.75,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "13 months < 15 months",
+        "general_rate": 6.25,
+        "senior_citizen_rate": 6.75,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "15 months < 18 months",
+        "general_rate": 6.45,
+        "senior_citizen_rate": 6.95,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "18 Months < 2 years",
+        "general_rate": 6.45,
+        "senior_citizen_rate": 6.95,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "2 years < 3 years",
+        "general_rate": 6.45,
+        "senior_citizen_rate": 6.95,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "3 years < 5 years",
+        "general_rate": 6.45,
+        "senior_citizen_rate": 6.95,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "5 years to 10 years",
+        "general_rate": 6.45,
+        "senior_citizen_rate": 7.2,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      }
+    ]
+  },
+  {
     "bank_name": "Kotak Bank",
     "source_url": "https://www.kotak.bank.in/en/personal-banking/deposits/fixed-deposit/fixed-deposit-interest-rate.html",
-    "extraction_timestamp": "2026-03-03T00:00:05.672221",
+    "extraction_timestamp": "2026-05-05T16:14:41.472919",
     "extraction_success": true,
     "error_message": null,
     "rates": [
@@ -970,15 +1302,119 @@
   },
   {
     "bank_name": "Indusind Bank",
-    "source_url": "https://www.indusind.bank.in/in/en/personal/deposits/fixed-deposit.html",
-    "extraction_timestamp": "2026-03-03T00:00:06.869210",
+    "source_url": "https://www.indusind.bank.in/in/en/personal/fixed-deposit-interest-rate.html",
+    "extraction_timestamp": "2026-05-05T16:14:42.656864",
     "extraction_success": true,
     "error_message": null,
     "rates": [
       {
-        "tenure": "10\n\n\r\n                                year",
-        "general_rate": 6.75,
-        "senior_citizen_rate": 6.75,
+        "tenure": "7 days to 30 days",
+        "general_rate": 3.25,
+        "senior_citizen_rate": 3.75,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "31 days to 45 days",
+        "general_rate": 3.5,
+        "senior_citizen_rate": 4.0,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "46 days to 60 days",
+        "general_rate": 4.5,
+        "senior_citizen_rate": 5.0,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "61 days to 90 days",
+        "general_rate": 4.75,
+        "senior_citizen_rate": 5.25,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "91 days to 180 days",
+        "general_rate": 5.0,
+        "senior_citizen_rate": 5.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "181 days to 210 days",
+        "general_rate": 5.88,
+        "senior_citizen_rate": 6.4,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "211 days to 269 days",
+        "general_rate": 6.14,
+        "senior_citizen_rate": 6.66,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "270 days to 364 days",
+        "general_rate": 6.4,
+        "senior_citizen_rate": 6.92,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "1 Year 6 Months to below 1 Year 7 Months",
+        "general_rate": 7.19,
+        "senior_citizen_rate": 7.71,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "1 Year 7 Months to 3 Years",
+        "general_rate": 7.08,
+        "senior_citizen_rate": 7.61,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "1 Year to below 1 Year 6 Months",
+        "general_rate": 6.92,
+        "senior_citizen_rate": 7.45,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "Above 3 Years up to below 61 Months",
+        "general_rate": 6.82,
+        "senior_citizen_rate": 7.34,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "Tax Saver (5 years)",
+        "general_rate": 6.82,
+        "senior_citizen_rate": 7.34,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "61 Months and above",
+        "general_rate": 6.66,
+        "senior_citizen_rate": 7.19,
         "min_amount": null,
         "max_amount": null,
         "special_conditions": null
@@ -986,16 +1422,112 @@
     ]
   },
   {
-    "bank_name": "Idfcfirstbank",
-    "source_url": "https://www.idfcfirstbank.com/nri-banking/nri-fixed-deposit",
-    "extraction_timestamp": "2026-03-03T00:00:18.218130",
+    "bank_name": "Idfcfirst Bank",
+    "source_url": "https://www.idfcfirst.bank.in/personal-banking/deposits/fixed-deposit/fd-interest-rates",
+    "extraction_timestamp": "2026-05-05T16:14:54.913823",
     "extraction_success": true,
     "error_message": null,
     "rates": [
       {
-        "tenure": "999\n\n\n                                                      M",
-        "general_rate": 1.0,
-        "senior_citizen_rate": null,
+        "tenure": "7 days – 14 days",
+        "general_rate": 3.25,
+        "senior_citizen_rate": 3.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "15 days – 29 days",
+        "general_rate": 3.25,
+        "senior_citizen_rate": 3.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "30 days – 45 days",
+        "general_rate": 3.5,
+        "senior_citizen_rate": 3.75,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "46 days – 90 days",
+        "general_rate": 4.5,
+        "senior_citizen_rate": 4.75,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "91 days – 180 days",
+        "general_rate": 5.0,
+        "senior_citizen_rate": 5.25,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "181 days – less than 1 Year",
+        "general_rate": 6.5,
+        "senior_citizen_rate": 6.75,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "1 year",
+        "general_rate": 6.5,
+        "senior_citizen_rate": 6.75,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "1 year 1 day – 370 days",
+        "general_rate": 6.5,
+        "senior_citizen_rate": 6.75,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "371 days – 499 days",
+        "general_rate": 7.0,
+        "senior_citizen_rate": 7.25,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "500 days – 2 years",
+        "general_rate": 7.25,
+        "senior_citizen_rate": 7.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "2 years 1 day – 3 years",
+        "general_rate": 7.25,
+        "senior_citizen_rate": 7.5,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "3 years 1 day – 5 years",
+        "general_rate": 7.15,
+        "senior_citizen_rate": 7.4,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "5 years 1 day – 10 years",
+        "general_rate": 6.0,
+        "senior_citizen_rate": 6.25,
         "min_amount": null,
         "max_amount": null,
         "special_conditions": null
@@ -1005,7 +1537,7 @@
   {
     "bank_name": "Federal Bank",
     "source_url": "https://www.federal.bank.in/deposit-rate",
-    "extraction_timestamp": "2026-03-03T00:00:19.736364",
+    "extraction_timestamp": "2026-05-05T16:14:56.273082",
     "extraction_success": true,
     "error_message": null,
     "rates": [
@@ -1059,8 +1591,8 @@
       },
       {
         "tenure": "271 days to less than 1 year",
-        "general_rate": 5.9,
-        "senior_citizen_rate": 6.4,
+        "general_rate": 6.0,
+        "senior_citizen_rate": 6.5,
         "min_amount": null,
         "max_amount": null,
         "special_conditions": null
@@ -1083,8 +1615,8 @@
       },
       {
         "tenure": "15 Months",
-        "general_rate": 6.5,
-        "senior_citizen_rate": 7.0,
+        "general_rate": 6.7,
+        "senior_citizen_rate": 7.2,
         "min_amount": null,
         "max_amount": null,
         "special_conditions": null
@@ -1099,8 +1631,8 @@
       },
       {
         "tenure": "36 months",
-        "general_rate": 6.7,
-        "senior_citizen_rate": 7.2,
+        "general_rate": 6.75,
+        "senior_citizen_rate": 7.25,
         "min_amount": null,
         "max_amount": null,
         "special_conditions": null
@@ -1126,102 +1658,94 @@
   {
     "bank_name": "Bandhanbank",
     "source_url": "https://www.bandhanbank.com/fixed-deposit",
-    "extraction_timestamp": "2026-03-03T00:00:21.321114",
+    "extraction_timestamp": "2026-05-05T16:14:57.791821",
     "extraction_success": true,
     "error_message": null,
     "rates": [
       {
-        "tenure": "7 days to 14 days",
+        "tenure": "15 days to 30 days 2.95% 3.70%",
         "general_rate": 2.95,
-        "senior_citizen_rate": 3.7,
+        "senior_citizen_rate": 2.95,
         "min_amount": null,
         "max_amount": null,
         "special_conditions": null
       },
       {
-        "tenure": "15 days to 30 days",
-        "general_rate": 2.95,
-        "senior_citizen_rate": 3.7,
-        "min_amount": null,
-        "max_amount": null,
-        "special_conditions": null
-      },
-      {
-        "tenure": "31 days to less than 2 months",
+        "tenure": "31 days to less than 2 months 3.45% 4.20%",
         "general_rate": 3.45,
+        "senior_citizen_rate": 3.45,
+        "min_amount": null,
+        "max_amount": null,
+        "special_conditions": null
+      },
+      {
+        "tenure": "2 months to less than 3 months 4.20% 4.95%",
+        "general_rate": 4.2,
         "senior_citizen_rate": 4.2,
         "min_amount": null,
         "max_amount": null,
         "special_conditions": null
       },
       {
-        "tenure": "2 months to less than 3 months",
+        "tenure": "3 months to less than 6 months 4.20% 4.95%",
         "general_rate": 4.2,
-        "senior_citizen_rate": 4.95,
+        "senior_citizen_rate": 4.2,
         "min_amount": null,
         "max_amount": null,
         "special_conditions": null
       },
       {
-        "tenure": "3 months to less than 6 months",
+        "tenure": "6 months to less than 1 year 4.20% 4.95%",
         "general_rate": 4.2,
-        "senior_citizen_rate": 4.95,
+        "senior_citizen_rate": 4.2,
         "min_amount": null,
         "max_amount": null,
         "special_conditions": null
       },
       {
-        "tenure": "6 months to less than 1 year",
-        "general_rate": 4.2,
-        "senior_citizen_rate": 4.95,
-        "min_amount": null,
-        "max_amount": null,
-        "special_conditions": null
-      },
-      {
-        "tenure": "1 year",
+        "tenure": "1 year 1 day to 1 year 9 months 7.00% 7.50%",
         "general_rate": 7.0,
-        "senior_citizen_rate": 7.5,
+        "senior_citizen_rate": 7.0,
         "min_amount": null,
         "max_amount": null,
         "special_conditions": null
       },
       {
-        "tenure": "1 year 1 day to 1 year 9 months",
+        "tenure": "1 year 7.00% 7.50%",
         "general_rate": 7.0,
-        "senior_citizen_rate": 7.5,
+        "senior_citizen_rate": 7.0,
         "min_amount": null,
         "max_amount": null,
         "special_conditions": null
       },
       {
-        "tenure": "1 year 9 months 1 day to less than 2 years",
+        "tenure": "1 year 9 months 1 day to less than 2 years 7.00% 7.50%",
         "general_rate": 7.0,
-        "senior_citizen_rate": 7.5,
+        "senior_citizen_rate": 7.0,
         "min_amount": null,
         "max_amount": null,
         "special_conditions": null
       },
       {
-        "tenure": "2 years to less than 3 years",
-        "general_rate": 7.2,
-        "senior_citizen_rate": 7.7,
+        "tenure": "2 years to less than 3 years 7.25% 7.75%",
+        "general_rate": 7.25,
+        "senior_citizen_rate": 7.25,
         "min_amount": null,
         "max_amount": null,
         "special_conditions": null
       },
       {
-        "tenure": "3 years to less than 5 years",
-        "general_rate": 7.0,
-        "senior_citizen_rate": 7.5,
+        "tenure": "3 years to less than 5 years 7.25% 7.75%",
+        "general_rate": 7.25,
+        "senior_citizen_rate": 7.25,
         "min_amount": null,
         "max_amount": null,
         "special_conditions": null
       },
       {
-        "tenure": "5 years to up to 10 years",
+        "tenure": "5 years to up to 10 years 5.85% 6.60%",
         "general_rate": 5.85,
-        "senior_citizen_rate": 6.6,
+        "senior_citizen_rate": 5.85,
         "min_amount": null,
         "max_amount": null,
         "special_conditions": null
@@ -1231,7 +1755,7 @@
   {
     "bank_name": "Shivalik Bank",
     "source_url": "https://shivalik.bank.in/interest-rate#fd-rd",
-    "extraction_timestamp": "2026-03-03T00:00:58.223872",
+    "extraction_timestamp": "2026-05-05T16:15:38.995151",
     "extraction_success": true,
     "error_message": null,
     "rates": [

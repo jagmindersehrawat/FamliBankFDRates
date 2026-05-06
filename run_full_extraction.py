@@ -47,14 +47,11 @@ def main():
     print(f"   Failed extractions: {summary.failed_extractions}")
     print(f"   Success rate: {summary.success_rate:.1f}%")
     
-    print(f"\n📈 Rate Statistics:")
-    print(f"   Total rates extracted: {summary.total_rates_extracted}")
-    print(f"   Average rates per bank: {summary.avg_rates_per_bank:.1f}")
-    
     print(f"\n⏱️  Timing:")
     print(f"   Start time: {summary.start_time.strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"   End time: {summary.end_time.strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"   Duration: {summary.duration_seconds/60:.1f} minutes")
+    if summary.end_time:
+        print(f"   End time: {summary.end_time.strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f"   Duration: {summary.duration/60:.1f} minutes")
     
     if summary.failed_extractions > 0:
         print(f"\n❌ Failed Banks:")
