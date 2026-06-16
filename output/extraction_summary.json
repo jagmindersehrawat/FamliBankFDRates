@@ -1,11 +1,11 @@
 {
   "total_banks": 30,
-  "successful_extractions": 18,
-  "failed_extractions": 12,
-  "success_rate": 60.0,
-  "start_time": "2026-05-05T16:14:22.155190",
-  "end_time": "2026-05-05T16:15:44.734399",
-  "duration_seconds": 82.579209,
+  "successful_extractions": 19,
+  "failed_extractions": 11,
+  "success_rate": 63.33333333333333,
+  "start_time": "2026-06-04T11:45:08.028513",
+  "end_time": "2026-06-04T11:46:35.894272",
+  "duration_seconds": 87.865759,
   "errors": [
     "Bankofindia Bank: Failed to fetch webpage content after all retries",
     "Yes Bank: All parsing strategies failed",
@@ -15,11 +15,10 @@
     "Cityunionbank: All parsing strategies failed",
     "Jkbank: All parsing strategies failed",
     "Au Bank: Failed to fetch webpage content after all retries",
-    "Ujjivansfb: Failed to fetch webpage content after all retries",
     "Suryodaybank: All parsing strategies failed",
     "Utkarsh Bank: All parsing strategies failed",
     "Unity Bank: All parsing strategies failed",
-    "Total rates extracted: 209",
+    "Total rates extracted: 215",
     "Banks with senior citizen rates: 16"
   ]
 }

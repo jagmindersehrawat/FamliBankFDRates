@@ -1535,17 +1535,19 @@ class RateExtractor:
     def _parse_indusind_bank_table(self, soup: BeautifulSoup) -> List[RateEntry]:
         """
         Special parser for IndusInd Bank tables.
-        IndusInd Bank has rates for deposits < 3 Cr with Annualized Yield columns.
+        IndusInd Bank has rates for deposits < 3 Cr.
         
-        Table structure (Table 0):
+        Table structure (Table 0) - current format:
         - Row 0: Main headers (< 3 Cr DOMESTIC, < 3 Cr Senior Citizen)
-        - Row 1: Sub-headers (Tenure, Rate, Annualized Yield, Rate, Annualized Yield)
-        - Row 2+: Data rows
+        - Row 1: Sub-headers (Tenure, Rate, Rate)
+        - Row 2+: Data rows with 3 columns
         
         We extract:
         - Column 0: Tenure
-        - Column 2: Annualized Yield (General)
-        - Column 4: Annualized Yield (Senior Citizen)
+        - Column 1: General Rate
+        - Column 2: Senior Citizen Rate
+        
+        Also supports older 5-column format with Annualized Yield columns.
         
         Args:
             soup: BeautifulSoup object of the page
@@ -1569,17 +1571,31 @@ class RateExtractor:
             
             rows = fd_table.find_all('tr')
             
-            # Skip first 2 rows (headers)
-            # Row 0: Main headers
-            # Row 1: Sub-headers (Tenure, Rate, Annualized Yield, Rate, Annualized Yield)
-            # Row 2+: Data rows
+            # Determine column layout from header row
+            # Check if it's 5-column (with Annualized Yield) or 3-column (Rate only)
+            header_cells = rows[1].find_all(['td', 'th']) if len(rows) > 1 else []
+            num_cols = len(header_cells)
             
+            # Column indices for general and senior rates
+            if num_cols >= 5:
+                # Old format: Tenure, Rate, Annualized Yield, Rate, Annualized Yield
+                general_col = 2  # Annualized Yield (General)
+                senior_col = 4  # Annualized Yield (Senior Citizen)
+                min_cols = 5
+                logger.info("IndusInd Bank: Using 5-column format (Annualized Yield)")
+            else:
+                # New format: Tenure, Rate (General), Rate (Senior)
+                general_col = 1
+                senior_col = 2
+                min_cols = 3
+                logger.info("IndusInd Bank: Using 3-column format (Rate)")
+            
+            # Skip first 2 rows (headers)
             for row_idx in range(2, len(rows)):
                 row = rows[row_idx]
                 cells = row.find_all(['td', 'th'])
                 
-                # Need at least 5 columns (Tenure, Rate, Annualized Yield, Rate, Annualized Yield)
-                if len(cells) < 5:
+                if len(cells) < min_cols:
                     continue
                 
                 try:
@@ -1592,15 +1608,15 @@ class RateExtractor:
                     if any(word in tenure.lower() for word in ['tenure', 'period', 'maturity', 'rate']):
                         continue
                     
-                    # Column 2: Annualized Yield (General)
-                    general_rate_text = cells[2].get_text().strip()
+                    # General Rate
+                    general_rate_text = cells[general_col].get_text().strip()
                     general_rate_text = re.sub(r'[^\d.]', '', general_rate_text)
                     if not general_rate_text:
                         continue
                     general_rate = float(general_rate_text)
                     
-                    # Column 4: Annualized Yield (Senior Citizen)
-                    senior_rate_text = cells[4].get_text().strip()
+                    # Senior Citizen Rate
+                    senior_rate_text = cells[senior_col].get_text().strip()
                     senior_rate_text = re.sub(r'[^\d.]', '', senior_rate_text)
                     if not senior_rate_text:
                         continue
@@ -1618,7 +1634,7 @@ class RateExtractor:
                     logger.warning(f"IndusInd Bank: Error parsing row {row_idx}: {str(e)}")
                     continue
             
-            logger.info(f"IndusInd Bank: Successfully extracted {len(rates)} rates from annualized yield columns")
+            logger.info(f"IndusInd Bank: Successfully extracted {len(rates)} rates")
             
         except Exception as e:
             logger.error(f"IndusInd Bank: Error parsing table: {str(e)}")

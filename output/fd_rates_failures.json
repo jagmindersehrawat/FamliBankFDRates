@@ -2,7 +2,7 @@
   {
     "bank_name": "Bankofindia Bank",
     "source_url": "https://bankofindia.bank.in/interest-rate/rupee-term-deposit-rate",
-    "extraction_timestamp": "2026-05-05T16:14:29.626217",
+    "extraction_timestamp": "2026-06-04T11:45:16.549329",
     "extraction_success": false,
     "error_message": "Failed to fetch webpage content after all retries",
     "rates": []
@@ -10,7 +10,7 @@
   {
     "bank_name": "Yes Bank",
     "source_url": "https://www.yes.bank.in/personal-banking/yes-individual/deposits/fixed-deposit",
-    "extraction_timestamp": "2026-05-05T16:14:44.437412",
+    "extraction_timestamp": "2026-06-04T11:45:35.603208",
     "extraction_success": false,
     "error_message": "All parsing strategies failed",
     "rates": []
@@ -18,7 +18,7 @@
   {
     "bank_name": "Rbl Bank",
     "source_url": "https://www.rbl.bank.in/download-forms/fixed-deposits",
-    "extraction_timestamp": "2026-05-05T16:14:48.920300",
+    "extraction_timestamp": "2026-06-04T11:45:39.898137",
     "extraction_success": false,
     "error_message": "All parsing strategies failed",
     "rates": []
@@ -26,7 +26,7 @@
   {
     "bank_name": "Dcb Bank",
     "source_url": "https://www.dcb.bank.in/rates/fixed-deposit-interest-rate",
-    "extraction_timestamp": "2026-05-05T16:14:59.223615",
+    "extraction_timestamp": "2026-06-04T11:45:50.296818",
     "extraction_success": false,
     "error_message": "All parsing strategies failed",
     "rates": []
@@ -34,7 +34,7 @@
   {
     "bank_name": "Kvb Bank",
     "source_url": "https://www.kvb.bank.in/personal/deposits/fixed-deposits/",
-    "extraction_timestamp": "2026-05-05T16:15:03.666278",
+    "extraction_timestamp": "2026-06-04T11:45:54.770552",
     "extraction_success": false,
     "error_message": "All parsing strategies failed",
     "rates": []
@@ -42,7 +42,7 @@
   {
     "bank_name": "Cityunionbank",
     "source_url": "https://www.cityunionbank.com/fd-rates",
-    "extraction_timestamp": "2026-05-05T16:15:08.247848",
+    "extraction_timestamp": "2026-06-04T11:45:59.415710",
     "extraction_success": false,
     "error_message": "All parsing strategies failed",
     "rates": []
@@ -50,7 +50,7 @@
   {
     "bank_name": "Jkbank",
     "source_url": "https://www.jkbank.com/fd-rates.html",
-    "extraction_timestamp": "2026-05-05T16:15:13.726457",
+    "extraction_timestamp": "2026-06-04T11:46:05.183243",
     "extraction_success": false,
     "error_message": "All parsing strategies failed",
     "rates": []
@@ -58,15 +58,7 @@
   {
     "bank_name": "Au Bank",
     "source_url": "https://www.au.bank.in/interest-rates/fixed-deposit-interest-rates",
-    "extraction_timestamp": "2026-05-05T16:15:18.292576",
-    "extraction_success": false,
-    "error_message": "Failed to fetch webpage content after all retries",
-    "rates": []
-  },
-  {
-    "bank_name": "Ujjivansfb",
-    "source_url": "https://www.ujjivansfb.in/nri/nro-fixed-deposit-form",
-    "extraction_timestamp": "2026-05-05T16:15:22.540514",
+    "extraction_timestamp": "2026-06-04T11:46:09.924854",
     "extraction_success": false,
     "error_message": "Failed to fetch webpage content after all retries",
     "rates": []
@@ -74,7 +66,7 @@
   {
     "bank_name": "Suryodaybank",
     "source_url": "https://www.suryodaybank.com/fd-rates.html",
-    "extraction_timestamp": "2026-05-05T16:15:26.571487",
+    "extraction_timestamp": "2026-06-04T11:46:16.364415",
     "extraction_success": false,
     "error_message": "All parsing strategies failed",
     "rates": []
@@ -82,7 +74,7 @@
   {
     "bank_name": "Utkarsh Bank",
     "source_url": "https://www.utkarsh.bank/deposits/fixed-deposit",
-    "extraction_timestamp": "2026-05-05T16:15:31.574988",
+    "extraction_timestamp": "2026-06-04T11:46:22.984855",
     "extraction_success": false,
     "error_message": "All parsing strategies failed",
     "rates": []
@@ -90,7 +82,7 @@
   {
     "bank_name": "Unity Bank",
     "source_url": "https://unity.bank.in/blog/fixed-deposit/fd-vs-rd-making-the-right-choice",
-    "extraction_timestamp": "2026-05-05T16:15:40.331094",
+    "extraction_timestamp": "2026-06-04T11:46:31.486474",
     "extraction_success": false,
     "error_message": "All parsing strategies failed",
     "rates": []
